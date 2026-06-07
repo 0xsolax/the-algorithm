@@ -1,0 +1,4 @@
+interface:
+  display_name: "02 Delete Part Or Process"
+  short_description: "Remove unjustified parts before optimizing."
+  default_prompt: "Use this skill to find what should be deleted before improving it."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "01 Make Requirements Less Dumb"
+  short_description: "Clarify requirements and challenge weak assumptions."
+  default_prompt: "Use this skill to clarify the real requirement, update docs/requirements, and run a Less Dumb Challenge against weak assumptions before building."

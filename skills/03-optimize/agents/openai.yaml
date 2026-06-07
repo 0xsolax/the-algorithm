@@ -1,0 +1,4 @@
+interface:
+  display_name: "03 Optimize"
+  short_description: "Improve only the remaining validated work."
+  default_prompt: "Use this skill to optimize a validated requirement without expanding scope."

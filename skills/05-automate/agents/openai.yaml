@@ -1,0 +1,4 @@
+interface:
+  display_name: "05 Automate"
+  short_description: "Automate only stable and verified workflows."
+  default_prompt: "Use this skill to decide and implement safe automation last."

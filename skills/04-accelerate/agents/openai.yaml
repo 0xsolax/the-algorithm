@@ -1,0 +1,4 @@
+interface:
+  display_name: "04 Accelerate"
+  short_description: "Speed up a stable system or workflow."
+  default_prompt: "Use this skill to accelerate a stable workflow after optimization."
