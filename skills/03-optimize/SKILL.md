@@ -13,6 +13,8 @@ Make the surviving solution simpler and better for its validated purpose. Optimi
 
 Optimize only what remains after deletion. Do not polish work that should not exist.
 
+Read `docs/requirements/requirements-map.md` before starting. Use `Algorithm Stage Status` to confirm that requirement clarification, Less Dumb Challenge Dialogue, deletion pass, and stable version boundary are complete. Update `Optimization Pass` before stopping.
+
 ## Question Budget
 
 - Ask 0-2 questions by default.
@@ -22,8 +24,11 @@ Optimize only what remains after deletion. Do not polish work that should not ex
 ## Procedure
 
 1. **Confirm the stable scope**
+   - Read `Algorithm Stage Status` in `docs/requirements/requirements-map.md`.
+   - Confirm `Requirement Clarification` is `Clarified`, `Less Dumb Challenge Dialogue` is `Resolved`, and `Stable Version Boundary` is `Confirmed`.
    - Restate the surviving feature, process, or implementation.
    - If deletion has not happened, run `delete-the-part-or-process-step` first.
+   - Mark `Optimization Pass` as `In Progress` when optimization starts.
 
 2. **Simplify before local optimization**
    - Collapse redundant states, branches, UI choices, prompts, handoffs, or abstractions.
@@ -51,6 +56,8 @@ Optimize only what remains after deletion. Do not polish work that should not ex
    - Define checks for happy path, error path, edge path, and regression risk.
    - For code, use existing test and build gates.
    - For UX or workflow, use manual acceptance checks tied to the real user task.
+   - Mark `Optimization Pass` as `Confirmed` after the quality checks pass, and set `Current recommended skill` to `04-accelerate`.
+   - If optimization reveals that the stable version is wrong, mark `Stable Version Boundary` as `Reopened` and return to `02-delete-the-part-or-process-step`.
 
 ## References
 
@@ -62,6 +69,7 @@ Use this compact structure:
 
 ```text
 Optimization pass:
+- Algorithm Stage Status:
 - Stable scope:
 - Simplification:
 - Dominant quality target:
@@ -77,4 +85,6 @@ Optimization pass:
 
 - If the improvement expands the requirement, return to `make-requirements-less-dumb`.
 - If the improvement preserves a part that should be removed, return to `delete-the-part-or-process-step`.
+- If `Algorithm Stage Status` is missing from `requirements-map.md`, return to `01-make-requirements-less-dumb` to initialize it.
+- If `Algorithm Stage Status` shows 01 or 02 unresolved, return to the earliest unresolved stage.
 - If the main issue is speed or throughput rather than quality, move to `accelerate` only after the quality target is stable.

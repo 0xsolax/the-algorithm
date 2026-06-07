@@ -1,55 +1,80 @@
 ---
 name: 02-delete-the-part-or-process-step
-description: Remove unjustified parts before optimizing. Use after a requirement, demo, workflow, code path, process, UI, or plan has a clear goal and needs scope reduction, simplification, deletion triage, or removal of steps, features, fields, approvals, abstractions, integrations, or manual handoffs that do not directly serve the validated need.
+description: Produce evidence-backed deletion, deferral, and collapse proposals after a requirement, demo gate, workflow, code path, process, UI, or plan has a clear validated goal. Use to deep-dive the relevant project surface, compare it against docs/requirements and prior Less Dumb Challenges, identify unjustified features, fields, states, pages, APIs, approvals, abstractions, dependencies, automations, or manual handoffs, and ask the user to confirm a smaller stable version before optimizing.
 ---
 
 # Delete the Part or Process Step
 
 ## Stage Objective
 
-Make the system simpler and more stable by deleting what should not exist. The goal is not elegance; the goal is to remove unjustified parts before anyone spends time optimizing them.
+Turn a clarified requirement into a smaller stable version by finding what can be deleted, deferred, or collapsed before anyone optimizes it.
 
-## Core Rule
+This skill is a deletion proposal workflow, not an automatic deletion executor. It should boldly surface parts that do not serve the validated goal, but only after a deep evidence pass.
 
-If the purpose is not clear, the part is suspect. If removing it does not break the validated goal, delete it or defer it.
+## Core Rules
+
+- Do not delete to appear rigorous. Delete only after evidence shows the part does not serve the validated goal.
+- If there is no validated goal, requirement doc, demo gate, or decision frame, return to `01-make-requirements-less-dumb`.
+- Use current project evidence over memory, taste, or generic minimalism.
+- Read requirement records before judging: `docs/requirements/requirements-map.md`, `Algorithm Stage Status`, the relevant feature or project requirement, and any `Less Dumb Challenge` section.
+- Do not start a normal deletion pass until `Requirement Clarification` is `Clarified` and `Less Dumb Challenge Dialogue` is `Resolved`; otherwise return to `01-make-requirements-less-dumb` or state that the deletion pass is provisional.
+- Separate proposals from execution. Ask the user to confirm deletion, deferral, or collapse before making irreversible, user-visible, data, permission, or architecture changes.
+- Prefer a smaller stable version over a "complete" V1 that cannot be validated cleanly.
 
 ## Question Budget
 
 - Ask 0-2 questions by default.
-- Ask only about protected constraints, ownership, data loss, compliance, or user-visible behavior.
-- Do not ask for opinions about every part. Infer from usage, dependencies, docs, tests, and workflow evidence.
+- Ask one grouped deletion confirmation instead of interrogating every candidate.
+- Ask only about protected constraints: data loss, compliance, permissions, customer-visible behavior, ownership, irreversible migration, or a deletion package that changes the stable version.
+- If evidence is enough, present the recommended deletion package and ask for confirmation.
 
 ## Procedure
 
 1. **Confirm the validated goal**
-   - Restate the requirement or demo gate from the prior stage.
-   - If there is no validated goal, return to `make-requirements-less-dumb`.
+   - Read `Algorithm Stage Status` in `docs/requirements/requirements-map.md`.
+   - Read the relevant requirement document and validation gate.
+   - Pull forward confirmed scope, non-goals, decisions, open questions, and prior Less Dumb Challenges.
+   - If the requirement is still unclear, stop and return to `01-make-requirements-less-dumb`.
+   - Mark `Deletion Pass` as `In Progress` when the deletion pass starts.
 
-2. **Inventory parts and process steps**
-   - List features, UI elements, fields, states, approvals, handoffs, code paths, dependencies, abstractions, and automations involved.
-   - Mark which parts are required for the validated goal and which are merely inherited, speculative, or convenient.
+2. **Inventory the relevant surface**
+   - List the features, UI elements, fields, states, pages, routes, APIs, data relationships, permissions, approvals, handoffs, code paths, components, dependencies, abstractions, scripts, automations, and manual steps involved.
+   - Mark which items are directly required by the validated goal and which are inherited, speculative, duplicated, future-facing, or convenience-driven.
 
-3. **Run the deletion test**
-   - What breaks if this is removed?
-   - Who notices?
-   - Is the break tied to the validated goal or to an assumed future?
-   - Can the part be replaced by a simpler manual step, existing capability, or narrower rule?
-   - Does the part have a responsible owner or hard evidence, not just "the team" or "the process"?
+3. **Deep dive before proposing deletion**
+   - Inspect docs, plans, code, callers, workflows, examples, screenshots, tests, and current behavior for the suspicious items.
+   - For each suspect item, answer: what breaks if removed, who notices, whether the break affects the validation gate, and whether a simpler existing capability can replace it.
+   - Do not propose deletion from naming, vibes, or "minimalism" alone.
 
-4. **Prefer deletion over improvement**
-   - Delete, defer, or collapse before refactoring or redesigning.
-   - Do not preserve a part just because it took effort to create.
-   - Do not automate a part that should be deleted.
-   - If nothing ever needs to be added back, the deletion pass may be too timid.
+4. **Run deletion lenses**
+   - Read `references/deletion-lenses.md`.
+   - Use both the Whole-Project Lens and Deep-Design Lens.
+   - Look for parts that create duplicated sources of truth, premature stage work, unnecessary operational cost, wrong domain coupling, redundant states, copied UI shape, or validation noise.
 
-5. **Define the stable version**
-   - State the smallest surviving workflow or implementation.
-   - State what is intentionally not present.
+5. **Classify deletion candidates**
+   - Read `references/deletion-candidate-record.md`.
+   - Classify each material candidate as `Delete now`, `Defer`, `Collapse`, `Keep`, or `Investigate`.
+   - Keep only with evidence. "Maybe later", "looks complete", or "already built" is not enough.
+
+6. **Define the stable version**
+   - Read `references/stable-version.md`.
+   - State the smallest surviving workflow, product surface, or implementation that still satisfies the validation gate.
+   - State what is intentionally absent and why.
    - Define regression checks that prove deletion did not damage the real goal.
+
+7. **Ask for deletion confirmation**
+   - Present one deletion package or one highest-impact deletion fork.
+   - Mark `Deletion Pass` as `Proposed` when asking for confirmation.
+   - Include the recommended option first and explain the impact.
+   - If the user confirms the stable version boundary, mark `Deletion Pass` as `Confirmed`, mark `Stable Version Boundary` as `Confirmed`, and set `Current recommended skill` to `03-optimize`.
+   - If the user confirms and explicitly asks for implementation, proceed with scoped edits. Otherwise preserve the proposal as a plan or requirement update.
 
 ## References
 
-- Read `references/deletion-rubric.md` when the deletion decision is ambiguous, politically sensitive, user-visible, or likely to be rationalized as "maybe later".
+- Read `references/deletion-lenses.md` before deciding what should be deleted, deferred, or collapsed.
+- Read `references/deletion-candidate-record.md` when recording material candidates or asking the user to confirm a deletion package.
+- Read `references/stable-version.md` before claiming the remaining version is stable.
+- Read `references/deletion-rubric.md` when a candidate is ambiguous, politically sensitive, user-visible, or likely to be rationalized as "maybe later".
 
 ## Output
 
@@ -58,18 +83,29 @@ Use this compact structure:
 ```text
 Deletion pass:
 - Validated goal:
+- Requirement docs inspected:
+- Algorithm Stage Status:
+- Prior Less Dumb Challenge used:
+- Surfaces inspected:
+- Stable version:
 - Required parts:
-- Suspect parts:
 - Delete now:
 - Defer:
-- Keep with reason:
-- Stable version:
+- Collapse:
+- Keep with evidence:
+- Investigate:
+- Recommended deletion package:
+- User confirmation needed:
 - Regression checks:
-- Blocking questions, if any:
+- Requirement or plan updates:
 ```
 
 ## Stop Conditions
 
-- If deletion could cause data loss, security exposure, compliance failure, or irreversible customer impact, stop and ask.
-- If every part is being kept for "maybe later", challenge the plan and return a smaller stable version.
-- If deletion exposes that the original requirement was wrong, return to `make-requirements-less-dumb`.
+- If the validated goal is missing or contradicted by evidence, return to `01-make-requirements-less-dumb`.
+- If `Algorithm Stage Status` is missing from `requirements-map.md`, return to `01-make-requirements-less-dumb` to initialize it.
+- If `Less Dumb Challenge Dialogue` is not `Resolved`, return to `01-make-requirements-less-dumb` before a normal deletion pass.
+- If deletion could cause data loss, security exposure, compliance failure, permission leakage, irreversible migration, or serious customer impact, stop and ask.
+- If every part is kept for "maybe later", challenge the plan and produce a smaller stable version.
+- If no evidence-backed deletion exists, say so and list what evidence would change that conclusion.
+- If deletion exposes that the original requirement is wrong, return to `01-make-requirements-less-dumb`.

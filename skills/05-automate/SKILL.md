@@ -13,6 +13,8 @@ Automate only what is stable enough to trust. The goal is to remove repeated man
 
 Automation is last. If a step should be deleted, do not automate it. If a step is unstable, do not automate it yet.
 
+Read `docs/requirements/requirements-map.md` before starting. Use `Algorithm Stage Status` to decide whether automation is ready, not appropriate, or blocked by an earlier Algorithm stage.
+
 ## Question Budget
 
 - Ask 0-2 questions by default.
@@ -22,13 +24,17 @@ Automation is last. If a step should be deleted, do not automate it. If a step i
 ## Procedure
 
 1. **Run the automation gate**
-   - Requirement is validated.
-   - Unnecessary parts are deleted.
-   - Remaining workflow is optimized.
-   - Acceleration pass is complete, or evidence shows no acceleration is needed.
+   - Read `Algorithm Stage Status` in `docs/requirements/requirements-map.md`.
+   - `Requirement Clarification` is `Clarified`.
+   - `Less Dumb Challenge Dialogue` is `Resolved`.
+   - `Stable Version Boundary` is `Confirmed`.
+   - `Optimization Pass` is `Confirmed`.
+   - `Acceleration Pass` is `Confirmed`, or evidence shows acceleration is not needed.
    - Bottlenecks are understood with a baseline or deliberate skip reason.
    - Inputs, outputs, failure modes, owners, and rollback are clear.
    - If any item fails, return to the relevant earlier Algorithm stage.
+   - Mark `Automation Gate` as `Ready` only when the gate passes.
+   - Mark `Automation Gate` as `Not Appropriate` when the workflow should stay manual for now.
 
 2. **Classify the manual work**
    - Repeated transformation
@@ -39,6 +45,7 @@ Automation is last. If a step should be deleted, do not automate it. If a step i
    - Repeated agent reasoning pattern
 
 3. **Choose the smallest automation**
+   - Mark `Automation Gate` as `In Progress` when automation design or implementation starts.
    - Prefer a checklist, command, script, test, saved prompt, or one-shot tool before a scheduler, service, agent, or integration.
    - Keep a manual override.
    - Keep logs or artifacts that prove what happened.
@@ -53,6 +60,7 @@ Automation is last. If a step should be deleted, do not automate it. If a step i
    - Run a dry run when possible.
    - Test happy path, invalid input, permission failure, repeated run, and rollback.
    - Confirm the automation saves time without reducing correctness or visibility.
+   - Mark `Automation Gate` as `Confirmed` after dry-run or test evidence proves the automation is safe enough.
 
 ## References
 
@@ -64,6 +72,7 @@ Use this compact structure:
 
 ```text
 Automation pass:
+- Algorithm Stage Status:
 - Stable workflow:
 - Automation gate:
 - Acceleration evidence:
@@ -79,5 +88,7 @@ Automation pass:
 ## Stop Conditions
 
 - If the workflow is not stable, do not automate. Return to the earliest failing Algorithm stage.
+- If `Algorithm Stage Status` is missing from `requirements-map.md`, return to `01-make-requirements-less-dumb` to initialize it.
+- If `Algorithm Stage Status` shows an unresolved earlier gate, return to that stage before automating.
 - If automation needs secrets, production permissions, scheduled execution, or external accounts, list dependencies and stop for approval before changing external state.
 - If automation makes the process harder to inspect or reverse, choose a smaller automation.
